@@ -8,8 +8,8 @@ import Avatar from "./Avatar";
 const Sidebar = ({ sidebarOpen }) => {
   return (
     <aside
-      className={`fixed top-16 overflow-y-auto scrollbar-hide right-0 h-[calc(100vh-4rem)] w-64 bg-gray-900 text-white transform transition-transform duration-300 ease-in-out
-  ${sidebarOpen ? "translate-x-0" : "translate-x-full"} md:translate-x-0 overflow-y-auto`}
+      className={`fixed top-16 right-0 w-64 bg-gray-900 scrollbar-hide text-white transform transition-transform duration-300 ease-in-out z-40
+  ${sidebarOpen ? "translate-x-0" : "translate-x-full"} h-[calc(100vh-4rem)] overflow-y-auto`}
     >
       <ul className="list-none p-0 m-0">
         {/* پروفایل */}

@@ -1,6 +1,6 @@
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   return (
-    <nav className="fixed top-0 right-0 left-0 h-16 bg-gray-800 text-white flex items-center justify-between px-4">
+    <nav className="fixed top-0 right-0 left-0 h-16 bg-gray-800 text-white flex items-center justify-between px-4 z-50">
       {/* سمت چپ خالی */}
       <div></div>
 
@@ -27,9 +27,9 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
         {/* دکمه بورگر */}
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="p-2 absolute right-0 focus:outline-none cursor-pointer hover:text-blue-400 transition-colors duration-300 md:hidden"
+          className="p-2 focus:outline-none absolute right-2 cursor-pointer hover:text-blue-400 transition-colors duration-300"
         >
-          <i className="fas fa-bars text-lg"></i>
+          <i className={`fas ${sidebarOpen ? "fa-times" : "fa-bars"} text-lg`}></i>
         </button>
       </div>
     </nav>

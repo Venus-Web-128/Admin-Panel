@@ -1,19 +1,35 @@
-import  { useState } from "react";
+// src/pages/Index.jsx
+import { useState } from "react";
 import Navbar from "./navbar/Navbar";
 import Sidebar from "./sidebar/Sidebar";
+import Dashboard from "./pages/Dashboard";
 
 const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
-      {/* Navbar با دکمه بورگر */}
+    <div className="flex flex-col min-h-screen bg-gray-100" dir="rtl">
+      {/* نوبار با دکمه بورگر همیشه فعال */}
       <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-      <div className="flex pt-16">
+      <div className="flex relative">
+        {/* Overlay وقتی سایدبار بازه (همه حالت‌ها) */}
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black/40 z-30"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+
+        {/* سایدبار فقط با state کنترل میشه */}
         <Sidebar sidebarOpen={sidebarOpen} />
-        <section id="content_section" className="flex-1 p-4">
-          {/* محتوای اصلی */}
+
+        {/* محتوای اصلی */}
+        <section
+          id="content_section"
+          className="flex-1 transition-all duration-300 p-4 md:p-6 lg:p-8 pt-16 relative z-20"
+        >
+          <Dashboard />
         </section>
       </div>
     </div>
