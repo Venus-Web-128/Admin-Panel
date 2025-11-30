@@ -2,7 +2,8 @@
 import { useState } from "react";
 import Navbar from "./navbar/Navbar";
 import Sidebar from "./sidebar/Sidebar";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Category from "./pages/Category/Category";
 
 const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -29,7 +30,8 @@ const Index = () => {
           id="content_section"
           className="flex-1 transition-all duration-300 p-4 md:p-6 lg:p-8 pt-16 relative z-20"
         >
-          <Dashboard />
+          {/* <Dashboard /> */}
+          <Category />
         </section>
       </div>
     </div>

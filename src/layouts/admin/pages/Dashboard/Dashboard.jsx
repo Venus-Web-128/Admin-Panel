@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { setDashboardChart } from "../utils/DashboardChar";
+import { setDashboardChart } from "../../utils/DashboardChar";
 import Card from "./Card";
 import ProductTable from "./ProductTable";
 
