@@ -4,6 +4,7 @@ import Navbar from "./navbar/Navbar";
 import Sidebar from "./sidebar/Sidebar";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Category from "./pages/Category/Category";
+import Product from "./pages/product/Product";
 
 const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -32,6 +33,8 @@ const Index = () => {
         >
           {/* <Dashboard /> */}
           <Category />
+          {/* <Product /> */}
+
         </section>
       </div>
     </div>
