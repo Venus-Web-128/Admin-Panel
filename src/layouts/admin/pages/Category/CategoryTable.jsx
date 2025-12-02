@@ -1,4 +1,3 @@
-import "@fortawesome/fontawesome-free/css/all.min.css";
 import { FaProjectDiagram, FaEdit, FaPlus, FaTimes } from "react-icons/fa";
 import PaginatedTable from "../../components/PaginatedTable";
 
@@ -46,8 +45,20 @@ const CategoryTable = () => {
     elements: (itemId) => additionalElements(itemId),
   };
 
+  const searchParams = {
+    title: "جستجو",
+    placeholder: "قسمتی از عنوان را وارد کنید",
+    searchField: "title",
+  };
+
   return (
-    <PaginatedTable data={data} dataInfo={dataInfo} additionField={additionField} />
+    <PaginatedTable
+      data={data}
+      dataInfo={dataInfo}
+      additionField={additionField}
+      searchParams={searchParams}
+      numOfPage={10}
+    />
   );
 };
 

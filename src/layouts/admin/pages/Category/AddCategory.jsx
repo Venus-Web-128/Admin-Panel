@@ -94,7 +94,7 @@ const Addcategory = ({ isOpen, onClose }) => {
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2  bg-red-500 cursor-pointer rounded-lg hover:bg-red-600 transition-colors"
+                className="px-4 py-2  bg-red-500 cursor-pointer text-white rounded-lg hover:bg-red-600 transition-colors"
               >
                 انصراف
               </button>
