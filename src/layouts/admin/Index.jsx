@@ -5,6 +5,8 @@ import Sidebar from "./sidebar/Sidebar";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Category from "./pages/Category/Category";
 import Product from "./pages/product/Product";
+import { Route, Routes } from "react-router-dom";
+import Addcategory from "./pages/Category/AddCategory";
 
 const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -29,12 +31,14 @@ const Index = () => {
         {/* محتوای اصلی */}
         <section
           id="content_section"
-          className="flex-1 transition-all duration-300 p-4 md:p-6 lg:p-8 pt-16 relative z-20"
-        >
-          {/* <Dashboard /> */}
-          <Category />
-          {/* <Product /> */}
-
+          className="flex-1 transition-all duration-300 p-4 md:p-6 lg:p-8 pt-16 relative z-20">
+            <Routes>
+              <Route path="/" element={<Dashboard/>}/>
+              <Route path="/categories" element={<Category />}/>
+              <Route path="/add-category" element={<Addcategory />} />
+              <Route path="/products" element={<Product />}/>
+              <Route path="*" element={<Dashboard/>} />
+            </Routes>
         </section>
       </div>
     </div>

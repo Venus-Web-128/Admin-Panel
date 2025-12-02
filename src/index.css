@@ -6,7 +6,6 @@
   direction: rtl;
 }
 
-
 /* مخفی کردن scrollbar در همه مرورگرها */
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
@@ -15,5 +14,4 @@
   -ms-overflow-style: none;  /* IE و Edge */
   scrollbar-width: none;     /* Firefox */
 }
-
 

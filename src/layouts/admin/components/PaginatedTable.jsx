@@ -1,28 +1,71 @@
 import React, { useEffect, useState } from "react";
 
-const PaginatedTable = ({ data, dataInfo, additionField, numOfPage = 10 }) => {
+const PaginatedTable = ({ setIsModalOpen, data, dataInfo, additionField, searchParams, numOfPage = 10 }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredData, setFilteredData] = useState(data);
   const [tableData, setTableData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState([]);
 
+  // فیلتر کردن داده‌ها بر اساس جستجو
   useEffect(() => {
-    let pCount = Math.ceil(data.length / numOfPage);
+    if (searchTerm.trim() === "") {
+      setFilteredData(data);
+    } else {
+      setFilteredData(
+        data.filter((item) =>
+          item[searchParams.searchField]
+            ?.toString()
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
+        )
+      );
+    }
+    setCurrentPage(1); // وقتی سرچ تغییر کرد برگرد به صفحه اول
+  }, [searchTerm, data, searchParams.searchField]);
+
+  // صفحه‌بندی
+  useEffect(() => {
+    let pCount = Math.ceil(filteredData.length / numOfPage);
     let pArr = [];
     for (let i = 1; i <= pCount; i++) pArr.push(i);
     setPages(pArr);
 
-    // اگر داده کمتر از numOfPage باشه، همه رو نشون بده
-    if (data.length <= numOfPage) {
-      setTableData(data);
+    if (filteredData.length <= numOfPage) {
+      setTableData(filteredData);
     } else {
       let start = (currentPage - 1) * numOfPage;
       let end = currentPage * numOfPage;
-      setTableData(data.slice(start, end));
+      setTableData(filteredData.slice(start, end));
     }
-  }, [data, currentPage, numOfPage]);
+  }, [filteredData, currentPage, numOfPage]);
 
   return (
     <div className="overflow-x-auto">
+      {/* بخش جستجو */}
+      {/* بخش جستجو + دکمه افزودن دسته */}
+      {searchParams && (
+        <div className="mb-4 flex justify-between items-center">
+          {/* سرچ */}
+          <input
+            type="text"
+            placeholder={searchParams.placeholder}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="border rounded-lg px-3 py-2 w-1/2 shadow-md focus:outline-none focus:ring focus:ring-indigo-300"
+          />
+
+          {/* دکمه افزودن دسته */}
+          <button
+            onClick={() => setIsModalOpen(true)} // ✅ اینجا تابع اجرا میشه
+            className="bg-green-600 hover:bg-green-700 text-white rounded-full p-3 ml-4"
+          >
+            <i className="fas fa-plus"></i>
+          </button>
+        </div>
+      )}
+
+      {/* جدول */}
       <table className="min-w-full border border-gray-300 text-center text-sm">
         <thead className="bg-gray-200">
           <tr>
@@ -54,8 +97,8 @@ const PaginatedTable = ({ data, dataInfo, additionField, numOfPage = 10 }) => {
         </tbody>
       </table>
 
-      {/* فقط وقتی داده بیشتر از numOfPage باشه صفحه‌بندی نشون بده */}
-      {data.length > numOfPage && (
+      {/* صفحه‌بندی فقط وقتی داده بیشتر از numOfPage باشه */}
+      {filteredData.length > numOfPage && (
         <nav aria-label="Page navigation" className="flex justify-center mt-4">
           <ul className="flex gap-2">
             <li>
@@ -70,9 +113,8 @@ const PaginatedTable = ({ data, dataInfo, additionField, numOfPage = 10 }) => {
               <li key={page}>
                 <button
                   onClick={() => setCurrentPage(page)}
-                  className={`px-3 py-1 border rounded hover:bg-gray-100 ${
-                    currentPage === page ? "bg-gray-300" : ""
-                  }`}
+                  className={`px-3 py-1 border rounded hover:bg-gray-100 ${currentPage === page ? "bg-gray-300" : ""
+                    }`}
                 >
                   {page}
                 </button>

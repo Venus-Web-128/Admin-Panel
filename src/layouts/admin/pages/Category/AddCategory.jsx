@@ -4,7 +4,7 @@ const Addcategory = ({ isOpen, onClose }) => {
       {isOpen && (
         <div
           id="add_product_category_modal"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          className="fixed inset-0 z-50 flex items-center pt-10 justify-center bg-black/50"
           aria-hidden="true"
         >
           {/* جعبه مودال */}
