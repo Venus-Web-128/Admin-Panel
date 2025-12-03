@@ -22,21 +22,21 @@ const Sidebar = ({ sidebarOpen }) => {
         <SidebarItem targetPath="/brands" icon="fas fa-copyright" label="مدیریت برندها" />
         <SidebarItem targetPath="/colors" icon="fas fa-palette" label="مدیریت رنگ‌ها" />
         <SidebarItem targetPath="/guaranties" icon="fas fa-palette" label="مدیریت گارانتی ها" />
-        <SidebarItem targetPath="/test" icon="fas fa-percent" label="مدیریت تخفیف‌ها" />
+        <SidebarItem targetPath="/discounts" icon="fas fa-percent" label="مدیریت تخفیف‌ها" />
 
         <div className="text-blue-500 text-center mt-4">سفارشات و سبد</div>
-        <SidebarItem targetPath="/test" icon="fas fa-shopping-basket" label="مدیریت سبدها" />
-        <SidebarItem targetPath="/test" icon="fas fa-receipt" label="مدیریت سفارشات" />
-        <SidebarItem targetPath="/test" icon="fas fa-truck" label="مدیریت نحوه ارسال" />
+        <SidebarItem targetPath="/carts" icon="fas fa-shopping-basket" label="مدیریت سبدها" />
+        <SidebarItem targetPath="/orders" icon="fas fa-receipt" label="مدیریت سفارشات" />
+        <SidebarItem targetPath="/deliveries" icon="fas fa-truck" label="مدیریت نحوه ارسال" />
 
         <div className="text-blue-500 text-center mt-4">کاربران و همکاران</div>
-        <SidebarItem targetPath="/test" icon="fas fa-users" label="مشاهده کاربران" />
-        <SidebarItem targetPath="/test" icon="fas fa-user-tag" label="نقش‌ها" />
-        <SidebarItem targetPath="/test" icon="fas fa-user-shield" label="مجوزها" />
+        <SidebarItem targetPath="/users" icon="fas fa-users" label="مشاهده کاربران" />
+        <SidebarItem targetPath="/roles" icon="fas fa-user-tag" label="نقش‌ها" />
+        <SidebarItem targetPath="/permissions" icon="fas fa-user-shield" label="مجوزها" />
 
         <div className="text-blue-500 text-center mt-4">ارتباطات</div>
-        <SidebarItem targetPath="/test" icon="fas fa-question-circle" label="سوال‌ها" />
-        <SidebarItem targetPath="/test" icon="fas fa-comments" label="نظرات" />
+        <SidebarItem targetPath="/questions" icon="fas fa-question-circle" label="سوال‌ها" />
+        <SidebarItem targetPath="/comments" icon="fas fa-comments" label="نظرات" />
 
 
         <SidebarItem targetPath="/test" icon="fas fa-power-off" label="خروج" className="hover:text-red-500 transition-colors duration-200" />

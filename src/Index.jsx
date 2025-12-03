@@ -1,7 +1,7 @@
 // src/pages/Index.jsx
 import { useState } from "react";
-import Navbar from "./navbar/Navbar";
-import Sidebar from "./sidebar/Sidebar";
+import Navbar from "../src/layout/navbar/Navbar";
+import Sidebar from "./layout/sidebar/Sidebar";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Category from "./pages/Category/Category";
 import Product from "./pages/product/Product";
@@ -10,6 +10,15 @@ import Addcategory from "./pages/Category/AddCategory";
 import Brands from "./pages/brands/Brands";
 import Colors from "./pages/colors/Colors";
 import Guaranties from "./pages/guaranties/Guaranties";
+import Discounts from "./pages/discounts/Discounts";
+import Carts from "./pages/carts/Carts";
+import Orders from "./pages/orders/Orders";
+import Deliveries from "./pages/deliveries/Deliveries";
+import Users from "./pages/users/Users";
+import Roles from "./pages/roles/Roles";
+import Permissions from "./pages/permissions/Permissions"
+import Questions from "./pages/questions/Questions";
+import Comments from "./pages/comments/Comments";
 
 const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -43,6 +52,15 @@ const Index = () => {
               <Route path="/brands" element={<Brands/>} />
               <Route path="/colors" element={<Colors/>} />
               <Route path="/guaranties" element={<Guaranties/>} />
+              <Route path="/discounts" element={<Discounts />} />
+              <Route path="/carts" element={<Carts />} />
+              <Route path="/orders" element={<Orders />} />
+              <Route path="/deliveries" element={<Deliveries />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/roles" element={<Roles />} />
+              <Route path="/permissions" element={<Permissions />} />
+              <Route path="/questions" element={<Questions />} />
+              <Route path="/comments" element={<Comments />} />
 
               <Route path="*" element={<Dashboard/>} />
             </Routes>

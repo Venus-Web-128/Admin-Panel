@@ -10,10 +10,10 @@ const ProductTable = () => {
   ];
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto ">
       <table className="min-w-full border border-gray-200 text-center text-sm">
-        <thead className="bg-gray-100 text-gray-700">
-          <tr>
+        <thead className="bg-gray-100  text-gray-700">
+          <tr >
             <th className="px-4 py-2 border">#</th>
             <th className="px-4 py-2 border">محصول</th>
             <th className="px-4 py-2 border">وضعیت</th>
