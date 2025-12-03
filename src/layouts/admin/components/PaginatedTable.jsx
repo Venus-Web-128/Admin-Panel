@@ -58,7 +58,7 @@ const PaginatedTable = ({ setIsModalOpen, data, dataInfo, additionField, searchP
           {/* دکمه افزودن دسته */}
           <button
             onClick={() => setIsModalOpen(true)} // ✅ اینجا تابع اجرا میشه
-            className="bg-green-600 hover:bg-green-700 text-white rounded-full p-3 ml-4"
+           className="bg-green-600 cursor-pointer hover:bg-green-700 duration-300 text-white rounded-full p-3 flex items-center justify-center transition-colors"
           >
             <i className="fas fa-plus"></i>
           </button>

@@ -19,8 +19,9 @@ const Sidebar = ({ sidebarOpen }) => {
         <div className="text-blue-500 text-center">فروشگاه</div>
         <SidebarItem targetPath="/categories" icon="fas fa-layer-group" label="مدیریت گروه محصولات" />
         <SidebarItem targetPath="/products" icon="fas fa-box-open" label="مدیریت محصولات" />
-        <SidebarItem targetPath="/test" icon="fas fa-copyright" label="مدیریت برندها" />
-        <SidebarItem targetPath="/test" icon="fas fa-palette" label="مدیریت رنگ‌ها" />
+        <SidebarItem targetPath="/brands" icon="fas fa-copyright" label="مدیریت برندها" />
+        <SidebarItem targetPath="/colors" icon="fas fa-palette" label="مدیریت رنگ‌ها" />
+        <SidebarItem targetPath="/guaranties" icon="fas fa-palette" label="مدیریت گارانتی ها" />
         <SidebarItem targetPath="/test" icon="fas fa-percent" label="مدیریت تخفیف‌ها" />
 
         <div className="text-blue-500 text-center mt-4">سفارشات و سبد</div>

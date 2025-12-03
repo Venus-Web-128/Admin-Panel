@@ -1,4 +1,4 @@
-import Index from './layouts/admin';
+import Index from '../src/layouts/admin/Index';
 
 function App() {
   return (

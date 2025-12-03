@@ -7,6 +7,9 @@ import Category from "./pages/Category/Category";
 import Product from "./pages/product/Product";
 import { Route, Routes } from "react-router-dom";
 import Addcategory from "./pages/Category/AddCategory";
+import Brands from "./pages/brands/Brands";
+import Colors from "./pages/colors/Colors";
+import Guaranties from "./pages/guaranties/Guaranties";
 
 const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -37,6 +40,10 @@ const Index = () => {
               <Route path="/categories" element={<Category />}/>
               <Route path="/add-category" element={<Addcategory />} />
               <Route path="/products" element={<Product />}/>
+              <Route path="/brands" element={<Brands/>} />
+              <Route path="/colors" element={<Colors/>} />
+              <Route path="/guaranties" element={<Guaranties/>} />
+
               <Route path="*" element={<Dashboard/>} />
             </Routes>
         </section>

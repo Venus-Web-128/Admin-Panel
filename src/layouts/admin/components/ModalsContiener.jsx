@@ -1,43 +1,53 @@
-// import React from "react";
-// import { createPortal } from "react-dom";
+import { createPortal } from "react-dom";
 
-// const ModalsContainer = ({ children, isOpen, onClose, title, fullScreen }) => {
-//   if (!isOpen) return null;
+const ModalsContainer = ({ children, id, fullScreen = false, title, isOpen, onClose, onSave }) => {
+  const container = document.getElementById("modals-root");
+  if (!container) return null;
 
-//   return createPortal(
-//     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-//       <div
-//         className={`bg-white rounded-lg shadow-lg overflow-y-auto ${
-//           fullScreen ? "w-full h-full" : "w-full max-w-3xl max-h-[90vh]"
-//         }`}
-//       >
-//         {/* هدر */}
-//         <div className="flex items-center justify-between px-6 py-4 border-b">
-//           <h5 className="text-lg font-bold">{title}</h5>
-//           <button
-//             onClick={onClose}
-//             className="text-gray-500 hover:text-gray-700 transition-colors"
-//           >
-//             ✕
-//           </button>
-//         </div>
+  return createPortal(
+    <div
+      id={id}
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 transition
+        ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+      aria-hidden={!isOpen}
+    >
+      <div className={`bg-white rounded-lg shadow-lg w-full ${fullScreen ? "h-full max-w-none" : "max-w-lg"}`}>
+        {/* Header */}
+        <div className="flex items-center justify-between border-b px-4 py-2">
+          <h5 className="text-lg font-bold">{title}</h5>
+          <button
+            type="button"
+            className="text-red-500 hover:text-red-600  cursor-pointer"
+            onClick={onClose}
+          >
+            ✕
+          </button>
+        </div>
 
-//         {/* بدنه */}
-//         <div className="px-6 py-4">{children}</div>
+        {/* Body */}
+        <div className="p-4">{children}</div>
 
-//         {/* فوتر */}
-//         <div className="flex justify-end gap-2 px-6 py-4 border-t">
-//           <button
-//             onClick={onClose}
-//             className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition-colors"
-//           >
-//             انصراف
-//           </button>
-//         </div>
-//       </div>
-//     </div>,
-//     document.getElementById("modals-root")
-//   );
-// };
+        {/* Footer */}
+        <div className="flex justify-end gap-2 border-t px-4 py-2">
+          <button
+            type="button"
+            className="px-4 py-2 bg-green-600 cursor-pointer text-white rounded hover:bg-green-700" 
+            onClick={onSave}
+          >
+            ذخیره
+          </button>
+          <button
+            type="button"
+            className="px-4 py-2  bg-red-500 cursor-pointer text-white rounded-lg hover:bg-red-600 transition-colors"
+            onClick={onClose}
+          >
+            انصراف
+          </button>
+        </div>
+      </div>
+    </div>,
+    container
+  );
+};
 
-// export default ModalsContainer;
+export default ModalsContainer;
