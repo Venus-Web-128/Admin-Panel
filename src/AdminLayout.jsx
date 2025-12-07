@@ -19,6 +19,7 @@ import Questions from "./pages/questions/Questions";
 import Comments from "./pages/comments/Comments";
 import Dashboard from "./pages/dashboard/Dashboard";
 import { useIsLogin } from "../src/hooks/authHook";
+import Logout from "./pages/auth/Logout";
 
 const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -71,6 +72,7 @@ const Index = () => {
             <Route path="/permissions" element={<Permissions />} />
             <Route path="/questions" element={<Questions />} />
             <Route path="/comments" element={<Comments />} />
+            <Route path="/logout" element={<Logout />} />
             <Route path="*" element={<Dashboard />} />
           </Routes>
         </section>

@@ -2,6 +2,9 @@ import React from "react";
 import SidebarItem from "./SidebarItem";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Avatar from "./Avatar";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 
 
 const Sidebar = ({ sidebarOpen }) => {
@@ -38,8 +41,17 @@ const Sidebar = ({ sidebarOpen }) => {
         <SidebarItem targetPath="/questions" icon="fas fa-question-circle" label="سوال‌ها" />
         <SidebarItem targetPath="/comments" icon="fas fa-comments" label="نظرات" />
 
+        <br></br>
 
-        <SidebarItem targetPath="/test" icon="fas fa-power-off" label="خروج" className="hover:text-red-500 transition-colors duration-200" />
+        <Link
+          to="/logout"
+          className="flex items-center mr-4 gap-2 hover:text-red-500 transition-colors duration-200"
+        >
+          <FontAwesomeIcon icon={faPowerOff} />
+          <span>خروج</span>
+        </Link>
+
+        <br></br>
 
       </ul>
     </aside>

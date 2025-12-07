@@ -7,6 +7,7 @@ import AuthFormikControl from "../../components/authForm/AuthFormikControl"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Swal from "sweetalert2";
 
 
 const initialValues = {
@@ -15,7 +16,8 @@ const initialValues = {
   remember: false
 };
 
-const onSubmit = (values, navigate) => {
+
+const onSubmit = (values, navigate, submitMethods) => {
   axios.post("https://ecomadminapi.azhadev.ir/api/auth/login", {
     phone: values.phone,
     password: values.password,
@@ -29,14 +31,30 @@ const onSubmit = (values, navigate) => {
     .then(res => {
       console.log(res);
       if (res.status === 200) {
-        localStorage.setItem('loginToken', JSON.stringify(res.data))
-        navigate('/')
+        localStorage.setItem("loginToken", JSON.stringify(res.data));
+        navigate("/");
+      } else {
+        Swal.fire({
+          icon: "error",
+          text: "مشخصات وارد شده صحیح نمی‌باشد",
+          confirmButtonText: "متوجه شدم",
+          footer: '<a href="#">Why do I have this issue?</a>'
+        });
       }
     })
-    .catch(err => {
-      console.error('ورود ناموفق');
+    .catch(error => {
+      Swal.fire({
+        icon: "error",
+        text: "مشکلی از سمت سرور رخ داده",
+        confirmButtonText: "متوجه شدم",
+        footer: '<a href="#">Why do I have this issue?</a>'
+      });
     })
+    .finally(() => {
+      submitMethods.setSubmitting(false);
+    });
 };
+
 
 const validationSchema = yup.object({
   phone: yup
@@ -55,12 +73,12 @@ const validationSchema = yup.object({
 
 const Login = () => {
   const [showPass, setShowPass] = useState(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={(values) => onSubmit(values, navigate)}
+      onSubmit={(values, setSubmitting) => onSubmit(values, navigate, setSubmitting)}
       validationSchema={validationSchema}
       validateOnMount
     >
@@ -85,7 +103,7 @@ const Login = () => {
                   id="phone"
                   name="phone"
                   autoComplete="tel"
-                  placeholder="09*********"
+                  placeholder="*********09"
                   className="w-full px-4 py-3 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
                 <ErrorMessage
@@ -178,4 +196,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login
