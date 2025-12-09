@@ -1,30 +1,63 @@
 import PaginatedTable from "../../components/PaginatedTable";
-import { FaProjectDiagram, FaEdit, FaPlus, FaTimes } from "react-icons/fa";
-
+import { getCategoriesService } from "../../services/category";
+import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import ShowInMenu from "./tableAddtion/showInMeno";
+import Actions from "./tableAddtion/Action";
+import { Outlet, useLocation, useParams } from "react-router-dom";
+import { convertDateToJalali } from "../../utils/ConvertDateToJalali";
 
 const CategoryTable = ({ setIsModalOpen }) => {
-  const data = [
-    { id: "1", category: "aaa", title: "bbb", price: "1111" },
-    { id: "2", category: "ccc", title: "ddd", price: "2222" },
-  ];
+  const params = useParams()
+  const location = useLocation()
+  const [data, setData] = useState([]);
+
+  const handleGetCategories = async () => {
+    try {
+      const res = await getCategoriesService(params.categoryId);
+      if (res.status === 200) {
+        setData(res.data.data);
+      } else {
+        Swal.fire({
+          icon: "error",
+          text: "اطلاعات دریافت نشد",
+          confirmButtonText: "متوجه شدم",
+        });
+      }
+    } catch {
+      Swal.fire({
+        icon: "error",
+        text: "مشکلی از سمت سرور پیش آمده",
+        confirmButtonText: "متوجه شدم",
+      });
+    }
+  };
+
+  useEffect(() => {
+    handleGetCategories();
+  }, [params.categoryId]);
+
 
   const dataInfo = [
     { field: "id", title: "#" },
     { field: "title", title: "عنوان محصول" },
-    { field: "price", title: "قیمت محصول" },
+    { field: "parent_id", title: "والد" },
   ];
 
-  const additionField = {
-    title: "عملیات",
-    elements: (itemId) => (
-      <div className="flex justify-center gap-2">
-        <FaProjectDiagram className="text-blue-500 cursor-pointer" />
-        <FaEdit className="text-yellow-500 cursor-pointer" />
-        <FaPlus className="text-green-600 cursor-pointer" />
-        <FaTimes className="text-red-600 cursor-pointer" />
-      </div>
-    ),
-  };
+  const additionField = [
+    {
+      title: "تاریخ",
+      elements: (rowData) => convertDateToJalali(rowData.created_at),
+    },
+    {
+      title: "نمایش در منو",
+      elements: (rowData) => <ShowInMenu rowData={rowData} />,
+    },
+    {
+      title: "عملیات",
+      elements: (rowData) => <Actions rowData={rowData} />,
+    },
+  ];
 
   const searchParams = {
     title: "جستجو",
@@ -33,14 +66,17 @@ const CategoryTable = ({ setIsModalOpen }) => {
   };
 
   return (
-    <PaginatedTable
-      data={data}
-      dataInfo={dataInfo}
-      additionField={additionField}
-      searchParams={searchParams}
-      numOfPage={10}
-      setIsModalOpen={setIsModalOpen} // ✅ حالا درست پاس داده میشه
-    />
+    <>
+      <Outlet />
+      <PaginatedTable
+        data={data}
+        dataInfo={dataInfo}
+        additionField={additionField}
+        searchParams={searchParams}
+        numOfPage={10}
+        setIsModalOpen={setIsModalOpen}
+      />
+    </>
   );
 };
 

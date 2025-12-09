@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const PaginatedTable = ({ setIsModalOpen, data, dataInfo, additionField, searchParams, numOfPage = 10 }) => {
+const PaginatedTable = ({ setIsModalOpen, data, dataInfo, additionField = [], searchParams, numOfPage = 10 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState(data);
   const [tableData, setTableData] = useState([]);
@@ -21,7 +21,7 @@ const PaginatedTable = ({ setIsModalOpen, data, dataInfo, additionField, searchP
         )
       );
     }
-    setCurrentPage(1); // وقتی سرچ تغییر کرد برگرد به صفحه اول
+    setCurrentPage(1);
   }, [searchTerm, data, searchParams.searchField]);
 
   // صفحه‌بندی
@@ -31,22 +31,16 @@ const PaginatedTable = ({ setIsModalOpen, data, dataInfo, additionField, searchP
     for (let i = 1; i <= pCount; i++) pArr.push(i);
     setPages(pArr);
 
-    if (filteredData.length <= numOfPage) {
-      setTableData(filteredData);
-    } else {
-      let start = (currentPage - 1) * numOfPage;
-      let end = currentPage * numOfPage;
-      setTableData(filteredData.slice(start, end));
-    }
+    let start = (currentPage - 1) * numOfPage;
+    let end = currentPage * numOfPage;
+    setTableData(filteredData.slice(start, end));
   }, [filteredData, currentPage, numOfPage]);
 
   return (
     <div className="overflow-x-auto">
-      {/* بخش جستجو */}
       {/* بخش جستجو + دکمه افزودن دسته */}
       {searchParams && (
         <div className="mb-4 flex justify-between items-center">
-          {/* سرچ */}
           <input
             type="text"
             placeholder={searchParams.placeholder}
@@ -54,11 +48,9 @@ const PaginatedTable = ({ setIsModalOpen, data, dataInfo, additionField, searchP
             onChange={(e) => setSearchTerm(e.target.value)}
             className="border rounded-lg px-3 py-2 w-1/2 shadow-md focus:outline-none focus:ring focus:ring-indigo-300"
           />
-
-          {/* دکمه افزودن دسته */}
           <button
-            onClick={() => setIsModalOpen(true)} // ✅ اینجا تابع اجرا میشه
-           className="bg-green-600 cursor-pointer hover:bg-green-700 duration-300 text-white rounded-full p-3 flex items-center justify-center transition-colors"
+            onClick={() => setIsModalOpen(true)}
+            className="bg-green-600 cursor-pointer hover:bg-green-700 duration-300 text-white rounded-full p-3 flex items-center justify-center transition-colors"
           >
             <i className="fas fa-plus"></i>
           </button>
@@ -74,9 +66,11 @@ const PaginatedTable = ({ setIsModalOpen, data, dataInfo, additionField, searchP
                 {i.title}
               </th>
             ))}
-            {additionField ? (
-              <th className="px-4 py-2 border">{additionField.title}</th>
-            ) : null}
+            {additionField.map((a, index) => (
+              <th key={index} className="px-4 py-2 border">
+                {a.title}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
@@ -84,20 +78,22 @@ const PaginatedTable = ({ setIsModalOpen, data, dataInfo, additionField, searchP
             <tr key={d.id} className="hover:bg-gray-100 transition-colors">
               {dataInfo.map((i) => (
                 <td key={i.field + "_" + d.id} className="px-4 py-2 border">
-                  {d[i.field]}
+                  {i.field === "created_at"
+                    ? convertDateToJalali(d.created_at)
+                    : d[i.field]}
                 </td>
               ))}
-              {additionField ? (
-                <td className="px-4 py-2 border">
-                  {additionField.elements(d.id)}
+              {additionField.map((a, index) => (
+                <td key={index} className="px-4 py-2 border">
+                  {a.elements(d)}
                 </td>
-              ) : null}
+              ))}
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* صفحه‌بندی فقط وقتی داده بیشتر از numOfPage باشه */}
+      {/* صفحه‌بندی */}
       {filteredData.length > numOfPage && (
         <nav aria-label="Page navigation" className="flex justify-center mt-4">
           <ul className="flex gap-2">

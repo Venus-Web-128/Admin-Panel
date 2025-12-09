@@ -38,7 +38,6 @@ const onSubmit = (values, navigate, submitMethods) => {
           icon: "error",
           text: "مشخصات وارد شده صحیح نمی‌باشد",
           confirmButtonText: "متوجه شدم",
-          footer: '<a href="#">Why do I have this issue?</a>'
         });
       }
     })
@@ -47,7 +46,6 @@ const onSubmit = (values, navigate, submitMethods) => {
         icon: "error",
         text: "مشکلی از سمت سرور رخ داده",
         confirmButtonText: "متوجه شدم",
-        footer: '<a href="#">Why do I have this issue?</a>'
       });
     })
     .finally(() => {
