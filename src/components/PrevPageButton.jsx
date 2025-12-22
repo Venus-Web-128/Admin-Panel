@@ -8,7 +8,7 @@ const PrevPageButton = () => {
     <button
       onClick={() => navigate(-1)}
       className="flex items-center cursor-pointer gap-2 bg-red-500 text-white px-1 py-1 rounded-lg shadow-md 
-                 hover:bg-red-600 hover:shadow-lg transition-all duration-300"
+                 hover:bg-red-600 hover:shadow-lg shadow-red-400 transition-all duration-300"
     >      <span>بازگشت</span>
     </button>
   );

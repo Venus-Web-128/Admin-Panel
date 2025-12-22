@@ -21,6 +21,7 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import { useIsLogin } from "../src/hooks/authHook";
 import Logout from "./pages/auth/Logout";
 import CategoryChildren from "./pages/Category/categoryChildren";
+import Attributes from "./pages/Category/attrs/Attributes";
 
 const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -62,6 +63,7 @@ const Index = () => {
               <Route path=":categoryId" element={<CategoryChildren />} />
             </Route>
             <Route path="/add-category" element={<Addcategory />} />
+            <Route path="/categories/:categoriesId/attributes" element={<Attributes />} />
             <Route path="/products" element={<Product />} />
             <Route path="/brands" element={<Brands />} />
             <Route path="/colors" element={<Colors />} />

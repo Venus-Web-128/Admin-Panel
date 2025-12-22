@@ -1,42 +1,36 @@
+import React, { useEffect, useState } from "react";
+import { Outlet, useParams } from "react-router-dom";
 import PaginatedTable from "../../components/PaginatedTable";
 import { getCategoriesService } from "../../services/category";
-import { useState, useEffect } from "react";
-import Swal from "sweetalert2";
-import ShowInMenu from "./tableAddtion/showInMeno";
-import Actions from "./tableAddtion/Action";
-import { Outlet, useLocation, useParams } from "react-router-dom";
 import { convertDateToJalali } from "../../utils/ConvertDateToJalali";
+import AddCategory from "./AddCategory";
+import Actions from "../Category/tableAddtion/Action";
+import ShowInMenu from "../Category/tableAddtion/showInMeno";
 
-const CategoryTable = ({ setIsModalOpen }) => {
-  const params = useParams()
-  const location = useLocation()
+const CategoryTable = () => {
+  const params = useParams();
   const [data, setData] = useState([]);
+  const [forceRender, setForceRender] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const handleGetCategories = async () => {
+    setLoading(true)
     try {
       const res = await getCategoriesService(params.categoryId);
       if (res.status === 200) {
         setData(res.data.data);
-      } else {
-        Swal.fire({
-          icon: "error",
-          text: "اطلاعات دریافت نشد",
-          confirmButtonText: "متوجه شدم",
-        });
       }
-    } catch {
-      Swal.fire({
-        icon: "error",
-        text: "مشکلی از سمت سرور پیش آمده",
-        confirmButtonText: "متوجه شدم",
-      });
+    } catch (error) {
+      console.log(error.message);
+    } finally{
+      setLoading(false)
     }
   };
 
   useEffect(() => {
     handleGetCategories();
-  }, [params.categoryId]);
-
+  }, [params, forceRender]);
 
   const dataInfo = [
     { field: "id", title: "#" },
@@ -55,7 +49,7 @@ const CategoryTable = ({ setIsModalOpen }) => {
     },
     {
       title: "عملیات",
-      elements: (rowData) => <Actions rowData={rowData} />,
+      elements: (rowData) => <Actions rowData={rowData} setForceRender={setForceRender} setIsModalOpen={setIsModalOpen} />,
     },
   ];
 
@@ -72,10 +66,17 @@ const CategoryTable = ({ setIsModalOpen }) => {
         data={data}
         dataInfo={dataInfo}
         additionField={additionField}
+        numOfPage={8} // ✅ اصلاح شد
         searchParams={searchParams}
-        numOfPage={10}
         setIsModalOpen={setIsModalOpen}
-      />
+         loading={loading}  
+      >
+        <AddCategory
+          setForceRender={setForceRender}
+          onClose={() => setIsModalOpen(false)}
+          isOpen={isModalOpen}
+        />
+      </PaginatedTable>
     </>
   );
 };

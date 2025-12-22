@@ -1,28 +1,32 @@
 import React, { useEffect, useState } from "react";
+import SpinnerLoad from "./SpinnerLoad";
+import { useLocation } from "react-router-dom";
 
-const PaginatedTable = ({ setIsModalOpen, data, dataInfo, additionField = [], searchParams, numOfPage = 10 }) => {
+const PaginatedTable = ({ setIsModalOpen, data, dataInfo, additionField = [], searchParams, numOfPage = 10, children, loading }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState(data);
   const [tableData, setTableData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState([]);
+  const location = useLocation();
+  const isAttributesPage = location.pathname.includes("attributes");
+
 
   // فیلتر کردن داده‌ها بر اساس جستجو
   useEffect(() => {
-    if (searchTerm.trim() === "") {
+    const field = searchParams?.searchField;
+    if (!field || searchTerm.trim() === "") {
       setFilteredData(data);
     } else {
       setFilteredData(
         data.filter((item) =>
-          item[searchParams.searchField]
-            ?.toString()
-            .toLowerCase()
-            .includes(searchTerm.toLowerCase())
+          item[field]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
         )
       );
     }
     setCurrentPage(1);
-  }, [searchTerm, data, searchParams.searchField]);
+  }, [searchTerm, data, searchParams]);
+
 
   // صفحه‌بندی
   useEffect(() => {
@@ -48,12 +52,14 @@ const PaginatedTable = ({ setIsModalOpen, data, dataInfo, additionField = [], se
             onChange={(e) => setSearchTerm(e.target.value)}
             className="border rounded-lg px-3 py-2 w-1/2 shadow-md focus:outline-none focus:ring focus:ring-indigo-300"
           />
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="bg-green-600 cursor-pointer hover:bg-green-700 duration-300 text-white rounded-full p-3 flex items-center justify-center transition-colors"
-          >
-            <i className="fas fa-plus"></i>
-          </button>
+          {!isAttributesPage && (
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="bg-green-600 cursor-pointer hover:bg-green-700 duration-300 text-white rounded-full p-3 flex items-center justify-center transition-colors"
+            >
+              <i className="fas fa-plus"></i>
+            </button>
+          )}
         </div>
       )}
 
@@ -73,24 +79,46 @@ const PaginatedTable = ({ setIsModalOpen, data, dataInfo, additionField = [], se
             ))}
           </tr>
         </thead>
-        <tbody>
-          {tableData.map((d) => (
-            <tr key={d.id} className="hover:bg-gray-100 transition-colors">
-              {dataInfo.map((i) => (
-                <td key={i.field + "_" + d.id} className="px-4 py-2 border">
-                  {i.field === "created_at"
-                    ? convertDateToJalali(d.created_at)
-                    : d[i.field]}
-                </td>
-              ))}
-              {additionField.map((a, index) => (
-                <td key={index} className="px-4 py-2 border">
-                  {a.elements(d)}
-                </td>
-              ))}
+        {loading ? (
+          <tbody>
+            <tr>
+              <td
+                colSpan={dataInfo.length + additionField.length}
+                className="text-center py-4"
+              >
+                <SpinnerLoad colorClass="text-primary" />
+              </td>
             </tr>
-          ))}
-        </tbody>
+          </tbody>
+        ) : data.length ? (
+          <tbody>
+            {tableData.map((d) => (
+              <tr key={d.id} className="hover:bg-gray-100 transition-colors">
+                {dataInfo.map((i) => (
+                  <td key={i.field + "_" + d.id} className="px-4 py-2 border">
+                    {d[i.field]}
+                  </td>
+                ))}
+                {additionField.map((a, index) => (
+                  <td key={index} className="px-4 py-2 border">
+                    {typeof a.elements === "function" ? a.elements(d) : d[a.field]}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        ) : (
+          <tbody>
+            <tr>
+              <td
+                colSpan={dataInfo.length + additionField.length}
+                className="text-red-500 text-center py-4"
+              >
+                دسته بندی یافت نشد!
+              </td>
+            </tr>
+          </tbody>
+        )}
       </table>
 
       {/* صفحه‌بندی */}
@@ -129,6 +157,8 @@ const PaginatedTable = ({ setIsModalOpen, data, dataInfo, additionField = [], se
           </ul>
         </nav>
       )}
+      {/* ✅ اینجا children رو رندر کن */}
+      {children}
     </div>
   );
 };

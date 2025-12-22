@@ -31,13 +31,6 @@ const ModalsContainer = ({ children, id, fullScreen = false, title, isOpen, onCl
         <div className="flex justify-end gap-2 border-t px-4 py-2">
           <button
             type="button"
-            className="px-4 py-2 bg-green-600 cursor-pointer text-white rounded hover:bg-green-700" 
-            onClick={onSave}
-          >
-            ذخیره
-          </button>
-          <button
-            type="button"
             className="px-4 py-2  bg-red-500 cursor-pointer text-white rounded-lg hover:bg-red-600 transition-colors"
             onClick={onClose}
           >
